@@ -1,7 +1,7 @@
 import {
-    Publisher,
-    Subjects,
-    TicketCreatedEvent,
+  Publisher,
+  Subjects,
+  TicketCreatedEvent,
 } from "@sgticketingchano/common";
 
 export class TicketCreatedPublisher extends Publisher<TicketCreatedEvent> {

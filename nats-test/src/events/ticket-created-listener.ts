@@ -3,16 +3,11 @@ import { Listener } from "./base-listener";
 import { Subjects } from "./subjects";
 import { TicketCreatedEvent } from "./ticket-created-event";
 
-interface FakeData {
-  name: string;
-  const: number;
-}
-
 export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
   readonly subject = Subjects.TicketCreated;
   queueGroupName = "payments-service";
 
-  onMessage(data: TicketCreatedEvent["data"], msg: Message): void {
+  onMessage(data: TicketCreatedEvent["data"], msg: Message) {
     console.log("Event data!", data);
 
     console.log(data.id);
