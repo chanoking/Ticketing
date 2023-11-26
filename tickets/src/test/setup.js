@@ -15,14 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const mongodb_memory_server_1 = require("mongodb-memory-server");
 const mongoose_1 = __importDefault(require("mongoose"));
+jest.mock("../nats-wrapper");
 let mongo;
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
-    process.env.JWT_KEY = "asdf";
+    process.env.JWT_KEY = "asdfasdf";
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     const mongo = yield mongodb_memory_server_1.MongoMemoryServer.create();
     const mongoUri = mongo.getUri();
     yield mongoose_1.default.connect(mongoUri, {});
 }));
 beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
+    jest.clearAllMocks();
     const collections = yield mongoose_1.default.connection.db.collections();
     for (let collection of collections) {
         yield collection.deleteMany({});
@@ -35,19 +38,19 @@ afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connection.close();
 }));
 global.signin = () => {
-    // Build a JWT payload. { id, email}
+    // Build a JWT payload.  { id, email }
     const payload = {
         id: new mongoose_1.default.Types.ObjectId().toHexString(),
         email: "test@test.com",
     };
     // Create the JWT!
     const token = jsonwebtoken_1.default.sign(payload, process.env.JWT_KEY);
-    // Build session Object. {jwt: MY_JWT}
+    // Build session Object. { jwt: MY_JWT }
     const session = { jwt: token };
     // Turn that session into JSON
     const sessionJSON = JSON.stringify(session);
-    // Take JSON nd encode it as base64
+    // Take JSON and encode it as base64
     const base64 = Buffer.from(sessionJSON).toString("base64");
-    // return a string that cookie with the encoded data
+    // return a string thats the cookie with the encoded data
     return [`session=${base64}`];
 };

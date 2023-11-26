@@ -15,13 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = require("../../app");
 const ticket_1 = require("../../models/ticket");
-jest.mock('../../nats-wrapper');
-it("has a route handler listening to /api/tickets for post request", () => __awaiter(void 0, void 0, void 0, function* () {
+const nats_wrapper_1 = require("../../nats-wrapper");
+it("has a route handler listening to /api/tickets for post requests", () => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield (0, supertest_1.default)(app_1.app).post("/api/tickets").send({});
     expect(response.status).not.toEqual(404);
 }));
 it("can only be accessed if the user is signed in", () => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield (0, supertest_1.default)(app_1.app).post("/api/tickets").send({}).expect(401);
+    yield (0, supertest_1.default)(app_1.app).post("/api/tickets").send({}).expect(401);
 }));
 it("returns a status other than 401 if the user is signed in", () => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield (0, supertest_1.default)(app_1.app)
@@ -52,7 +52,7 @@ it("returns an error if an invalid price is provided", () => __awaiter(void 0, v
         .post("/api/tickets")
         .set("Cookie", global.signin())
         .send({
-        title: "asdf",
+        title: "asldkjf",
         price: -10,
     })
         .expect(400);
@@ -60,7 +60,7 @@ it("returns an error if an invalid price is provided", () => __awaiter(void 0, v
         .post("/api/tickets")
         .set("Cookie", global.signin())
         .send({
-        title: "asdf",
+        title: "laskdfj",
     })
         .expect(400);
 }));
@@ -80,4 +80,16 @@ it("creates a ticket with valid inputs", () => __awaiter(void 0, void 0, void 0,
     expect(tickets.length).toEqual(1);
     expect(tickets[0].price).toEqual(20);
     expect(tickets[0].title).toEqual(title);
+}));
+it("publishes an event", () => __awaiter(void 0, void 0, void 0, function* () {
+    const title = "asldkfj";
+    yield (0, supertest_1.default)(app_1.app)
+        .post("/api/tickets")
+        .set("Cookie", global.signin())
+        .send({
+        title,
+        price: 20,
+    })
+        .expect(201);
+    expect(nats_wrapper_1.natsWrapper.client.publish).toHaveBeenCalled();
 }));
