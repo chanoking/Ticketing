@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = require("../../app");
 const ticket_1 = require("../../models/ticket");
+jest.mock('../../nats-wrapper');
 it("has a route handler listening to /api/tickets for post request", () => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield (0, supertest_1.default)(app_1.app).post("/api/tickets").send({});
     expect(response.status).not.toEqual(404);
@@ -63,13 +64,13 @@ it("returns an error if an invalid price is provided", () => __awaiter(void 0, v
     })
         .expect(400);
 }));
-it('creates a ticket with valid inputs', () => __awaiter(void 0, void 0, void 0, function* () {
+it("creates a ticket with valid inputs", () => __awaiter(void 0, void 0, void 0, function* () {
     let tickets = yield ticket_1.Ticket.find({});
     expect(tickets.length).toEqual(0);
-    const title = 'asldkfj';
+    const title = "asldkfj";
     yield (0, supertest_1.default)(app_1.app)
-        .post('/api/tickets')
-        .set('Cookie', global.signin())
+        .post("/api/tickets")
+        .set("Cookie", global.signin())
         .send({
         title,
         price: 20,

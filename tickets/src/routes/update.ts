@@ -1,8 +1,8 @@
 import {
-  NotAuthroziedError,
-  NotFoundError,
-  requireAuth,
-  validateRequest,
+    NotAuthroziedError,
+    NotFoundError,
+    requireAuth,
+    validateRequest,
 } from "@sgticketingchano/common";
 import express, { Request, Response } from "express";
 import { body } from "express-validator";

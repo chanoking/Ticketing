@@ -38,7 +38,7 @@ router.post('/api/tickets', common_1.requireAuth, [
         id: ticket.id,
         title: ticket.title,
         price: ticket.price,
-        // userId: ticket.userId,
+        userId: ticket.userId,
     });
     res.status(201).send(ticket);
 }));

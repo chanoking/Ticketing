@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = require("../../app");
+// jest.mock('../../nats-wrapper')
 it("returns a 404 if the provided id does not exist", () => __awaiter(void 0, void 0, void 0, function* () {
     const id = new mongoose_1.default.Types.ObjectId().toHexString();
     yield (0, supertest_1.default)(app_1.app)
