@@ -1,7 +1,8 @@
+import { OrderStatus } from "@sgticketingchano/common";
 import mongoose from "mongoose";
 import request from "supertest";
 import { app } from "../../app";
-import { Order, OrderStatus } from "../../models/order";
+import { Order } from "../../models/order";
 import { Ticket } from "../../models/ticket";
 import { natsWrapper } from "../../nats-wrapper";
 

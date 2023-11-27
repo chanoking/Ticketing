@@ -2,8 +2,6 @@ import { OrderStatus } from "@sgticketingchano/common";
 import mongoose from "mongoose";
 import { TicketDoc } from "./ticket";
 
-export { OrderStatus };
-
 interface OrderAttrs {
   userId: string;
   status: OrderStatus;
@@ -34,7 +32,7 @@ const orderSchema = new mongoose.Schema(
       enum: Object.values(OrderStatus),
       default: OrderStatus.Created,
     },
-    expriesAt: {
+    expiresAt: {
       type: mongoose.Schema.Types.Date,
     },
     ticket: {

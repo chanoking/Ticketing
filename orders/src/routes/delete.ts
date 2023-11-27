@@ -1,11 +1,12 @@
 import {
   NotAuthroziedError,
   NotFoundError,
+  OrderStatus,
   requireAuth,
 } from "@sgticketingchano/common";
 import express, { Request, Response } from "express";
 import { OrderCancelledPublisher } from "../events/publishers/order-cancelled-publisher";
-import { Order, OrderStatus } from "../models/order";
+import { Order } from "../models/order";
 import { natsWrapper } from "../nats-wrapper";
 
 const router = express.Router();
