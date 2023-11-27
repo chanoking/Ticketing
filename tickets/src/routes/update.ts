@@ -1,8 +1,8 @@
 import {
-    NotAuthroziedError,
-    NotFoundError,
-    requireAuth,
-    validateRequest,
+  NotAuthroziedError,
+  NotFoundError,
+  requireAuth,
+  validateRequest,
 } from "@sgticketingchano/common";
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
@@ -40,6 +40,7 @@ router.put(
     await ticket.save();
     new TicketUpdatedPublisher(natsWrapper.client).publish({
       id: ticket.id,
+      version: ticket.version,
       title: ticket.title,
       price: ticket.price,
       userId: ticket.userId,
