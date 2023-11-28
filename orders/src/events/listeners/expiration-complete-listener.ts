@@ -1,8 +1,8 @@
 import {
-    ExpirationCompleteEvent,
-    Listener,
-    OrderStatus,
-    Subjects,
+  ExpirationCompleteEvent,
+  Listener,
+  OrderStatus,
+  Subjects,
 } from "@sgticketingchano/common";
 import { Message } from "node-nats-streaming";
 import { Order } from "../../models/order";
