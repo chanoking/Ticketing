@@ -14,6 +14,7 @@ const LandingPage = ({ currentUser, tickets }) => {
       </tr>
     );
   });
+
   return (
     <div>
       <h1>Tickets</h1>
